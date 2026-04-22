@@ -1,0 +1,15 @@
+.env
+__pycache__/
+*.pyc
+outputs/
+.DS_Store
+tests/.tmp/
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json

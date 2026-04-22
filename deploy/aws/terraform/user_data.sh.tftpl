@@ -1,0 +1,55 @@
+#!/bin/bash
+set -euxo pipefail
+
+exec > >(tee /var/log/user-data.log | logger -t user-data -s 2>/dev/console) 2>&1
+
+export DEBIAN_FRONTEND=noninteractive
+
+apt-get update -y
+apt-get install -y docker.io git curl
+systemctl enable --now docker
+
+APP_ROOT="/opt/${project_name}"
+REPO_DIR="${APP_ROOT}/repo"
+OUTPUT_DIR="${APP_ROOT}/outputs"
+
+mkdir -p "${APP_ROOT}" "${OUTPUT_DIR}"
+
+if [ ! -d "${REPO_DIR}/.git" ]; then
+  git clone --branch "${repo_branch}" "${repo_url}" "${REPO_DIR}"
+else
+  cd "${REPO_DIR}"
+  git fetch origin
+  git checkout "${repo_branch}"
+  git pull --ff-only origin "${repo_branch}"
+fi
+
+cd "${REPO_DIR}"
+
+cat > .env <<EOF
+GROQ_API_KEY=${groq_api_key}
+EXA_API_KEY=${exa_api_key}
+MODEL_NAME=${model_name}
+EOF
+
+docker rm -f "${project_name}" || true
+docker build -t "${project_name}:latest" .
+
+docker_args=(
+  --detach
+  --name "${project_name}"
+  --restart unless-stopped
+  --env-file .env
+  --publish "${api_port}:8000"
+  --volume "${OUTPUT_DIR}:/app/outputs"
+)
+
+if [ -f /var/log/auth.log ]; then
+  docker_args+=(--volume "/var/log/auth.log:/var/log/auth.log:ro")
+fi
+
+if [ -f /var/log/syslog ]; then
+  docker_args+=(--volume "/var/log/syslog:/var/log/syslog:ro")
+fi
+
+docker run "${docker_args[@]}" "${project_name}:latest"
