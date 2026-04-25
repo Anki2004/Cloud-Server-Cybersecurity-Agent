@@ -10,21 +10,21 @@ apt-get install -y docker.io git curl
 systemctl enable --now docker
 
 APP_ROOT="/opt/${project_name}"
-REPO_DIR="${APP_ROOT}/repo"
-OUTPUT_DIR="${APP_ROOT}/outputs"
+REPO_DIR="$${APP_ROOT}/repo"
+OUTPUT_DIR="$${APP_ROOT}/outputs"
 
-mkdir -p "${APP_ROOT}" "${OUTPUT_DIR}"
+mkdir -p "$${APP_ROOT}" "$${OUTPUT_DIR}"
 
-if [ ! -d "${REPO_DIR}/.git" ]; then
-  git clone --branch "${repo_branch}" "${repo_url}" "${REPO_DIR}"
+if [ ! -d "$${REPO_DIR}/.git" ]; then
+  git clone --branch "${repo_branch}" "${repo_url}" "$${REPO_DIR}"
 else
-  cd "${REPO_DIR}"
+  cd "$${REPO_DIR}"
   git fetch origin
   git checkout "${repo_branch}"
   git pull --ff-only origin "${repo_branch}"
 fi
 
-cd "${REPO_DIR}"
+cd "$${REPO_DIR}"
 
 cat > .env <<EOF
 GROQ_API_KEY=${groq_api_key}
@@ -41,7 +41,7 @@ docker_args=(
   --restart unless-stopped
   --env-file .env
   --publish "${api_port}:8000"
-  --volume "${OUTPUT_DIR}:/app/outputs"
+  --volume "$${OUTPUT_DIR}:/app/outputs"
 )
 
 if [ -f /var/log/auth.log ]; then
@@ -52,4 +52,4 @@ if [ -f /var/log/syslog ]; then
   docker_args+=(--volume "/var/log/syslog:/var/log/syslog:ro")
 fi
 
-docker run "${docker_args[@]}" "${project_name}:latest"
+docker run "$${docker_args[@]}" "${project_name}:latest"

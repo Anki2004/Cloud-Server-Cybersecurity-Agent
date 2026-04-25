@@ -23,10 +23,16 @@ services:
       - .:/app
     command: >
       sh -c "pip install streamlit requests -q &&
-             streamlit run ui/streamlit_app/ui.py
+             streamlit run streamlit_app/ui.py
              --server.port=8501 --server.address=0.0.0.0"
     ports:
       - "8501:8501"
     depends_on:
       - api
+    restart: unless-stopped
+  redis:
+    image: redis:7-alpine
+    container_name: cybersec_redis
+    ports:
+      - "6379:6379"
     restart: unless-stopped

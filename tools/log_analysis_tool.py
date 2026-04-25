@@ -2,7 +2,7 @@ from crewai_tools import BaseTool
 import re
 from collections import Counter
 from logger import get_logger
-
+from typing import ClassVar
 logger = get_logger(__name__)
 
 
@@ -15,7 +15,7 @@ class LogAnalysisTool(BaseTool):
         "privilege escalation, and malware process execution."
     )
 
-    SIGNATURES = {
+    SIGNATURES:ClassVar[dict] = {
         "brute_force_ssh": r"Failed password for .* from (\d+\.\d+\.\d+\.\d+)",
         "ssh_root_attempt": r"Failed password for root from (\d+\.\d+\.\d+\.\d+)",
         "privilege_escalation": r"sudo:.*FAILED|authentication failure.*user=(\w+)",
@@ -25,7 +25,7 @@ class LogAnalysisTool(BaseTool):
         "cron_modification": r"(crontab|CRON).*root",
     }
 
-    SEVERITY_MAP = {
+    SEVERITY_MAP:ClassVar[dict] = {
         "successful_root_login": "CRITICAL",
         "malware_process": "CRITICAL",
         "ssh_root_attempt": "HIGH",
