@@ -1,8 +1,10 @@
 import streamlit as st
 import requests
 import time
+import pandas as pd
+from datetime import datetime
 
-API_BASE = "http://localhost:8000"
+API_BASE = "http://api:8000"
 
 st.set_page_config(
     page_title="Cybersecurity Intelligence System",
@@ -33,7 +35,7 @@ with st.sidebar:
             value="/var/log/auth.log,/var/log/syslog"
         )
         scan_hours = st.slider("Scan window (hours back)", 1, 72, 24)
-        query = "latest cybersecurity threats 2024"  # used if escalated
+        query = "latest cybersecurity threats 2024"
     else:
         st.markdown("**Research Settings**")
         query = st.text_input("Threat query", value="latest cybersecurity threats 2024")
@@ -46,7 +48,7 @@ with st.sidebar:
     st.divider()
     st.markdown("**Agents in this system:**")
     if mode == "detect":
-        st.markdown("- 🖥️ Cloud Security Detection Agent *(new)*")
+        st.markdown("- 🖥️ Cloud Security Detection Agent")
         st.markdown("- 🔍 Threat Intelligence Analyst")
         st.markdown("- 🧪 Vulnerability Researcher")
         st.markdown("- 🛠️ Incident Response Advisor")
@@ -59,12 +61,63 @@ with st.sidebar:
         st.markdown("- 📝 Report Writer")
         st.markdown("- 📊 Risk Scorer")
 
+
+# ── Metrics Helper ────────────────────────────────────────────────────────────
+def fetch_jobs():
+    try:
+        res = requests.get(f"{API_BASE}/jobs", timeout=5).json()
+        return res.get("jobs", [])
+    except:
+        return []
+
+
+def compute_metrics(jobs_list):
+    total       = len(jobs_list)
+    completed   = sum(1 for j in jobs_list if j["status"] == "completed")
+    failed      = sum(1 for j in jobs_list if j["status"] == "failed")
+    escalated   = sum(1 for j in jobs_list if j.get("escalated") is True)
+    critical    = sum(1 for j in jobs_list if j.get("severity") in ("CRITICAL", "HIGH"))
+    scheduled   = sum(1 for j in jobs_list if j.get("scheduled", False))
+    return {
+        "total": total,
+        "completed": completed,
+        "failed": failed,
+        "escalated": escalated,
+        "critical": critical,
+        "scheduled": scheduled,
+    }
+
+
+def build_trend_data(jobs_list):
+    """Build per-scan threat detection trend."""
+    rows = []
+    for job in jobs_list:
+        if job["status"] != "completed" or not job.get("completed_at"):
+            continue
+        try:
+            ts = datetime.fromisoformat(job["completed_at"])
+        except:
+            continue
+        rows.append({
+            "Time": ts,
+            "Threats": 1 if job.get("escalated") else 0,
+            "Severity": job.get("severity", "LOW"),
+            "Mode": job.get("mode", "detect"),
+        })
+    if not rows:
+        return pd.DataFrame()
+    df = pd.DataFrame(rows).sort_values("Time")
+    df["Scan #"] = range(1, len(df) + 1)
+    return df
+
+
 # ── Tabs ──────────────────────────────────────────────────────────────────────
-tab1, tab2, tab3, tab4 = st.tabs([
+tab1, tab2, tab3, tab4, tab5 = st.tabs([
     "📋 Detection Report",
     "🌐 Intelligence Report",
     "📊 Risk Matrix",
-    "📁 Job History"
+    "📈 Threat Trends",
+    "📁 Job History",
 ])
 
 # ── Run Job ───────────────────────────────────────────────────────────────────
@@ -88,7 +141,6 @@ if run_btn:
             st.error(f"Failed to submit job: {e}")
             st.stop()
 
-    # ── Progress polling ───────────────────────────────────────────────────
     phase_labels = {
         "queued":       "⏳ Queued...",
         "detection":    "🔍 Phase 1: Scanning server (logs, network, filesystem)...",
@@ -100,7 +152,7 @@ if run_btn:
     progress_bar = st.progress(0, text="Starting...")
     status_box   = st.empty()
 
-    for i in range(200):  # poll up to ~10 mins
+    for i in range(200):
         time.sleep(3)
         try:
             poll = requests.get(f"{API_BASE}/results/{job_id}", timeout=5).json()
@@ -131,10 +183,33 @@ if run_btn:
 # ── Display Results ───────────────────────────────────────────────────────────
 result = st.session_state.get("last_result")
 
+# ── Metrics Banner (always visible) ──────────────────────────────────────────
+jobs_list = fetch_jobs()
+metrics   = compute_metrics(jobs_list)
+
+m1, m2, m3, m4, m5, m6 = st.columns(6)
+m1.metric("Total Scans",      metrics["total"])
+m2.metric("Completed",        metrics["completed"])
+m3.metric("Failed",           metrics["failed"])
+m4.metric("Threats Found",    metrics["escalated"])
+m5.metric("High/Critical",    metrics["critical"])
+m6.metric("Auto Scans",       metrics["scheduled"])
+
+st.divider()
+
+# ── Tab 1: Detection Report ───────────────────────────────────────────────────
 with tab1:
     if result:
         escalated = result.get("escalated")
-        st.markdown(f"**Job:** `{result['job_id']}`  |  **Mode:** `{result.get('mode')}`  |  **Escalated:** `{escalated}`")
+        sev = result.get("severity", "—")
+        sev_color = {"CRITICAL": "🔴", "HIGH": "🟠", "MEDIUM": "🟡", "LOW": "🟢"}.get(sev, "⚪")
+
+        st.markdown(
+            f"**Job:** `{result['job_id']}`  |  "
+            f"**Mode:** `{result.get('mode')}`  |  "
+            f"**Escalated:** `{escalated}`  |  "
+            f"**Severity:** {sev_color} `{sev}`"
+        )
 
         if escalated is False and result.get("mode") == "detect":
             st.success("✅ System scan completed — no active threats detected on the server.")
@@ -152,6 +227,7 @@ with tab1:
     else:
         st.info("Run the system in Detect mode to see detection results here.")
 
+# ── Tab 2: Intelligence Report ────────────────────────────────────────────────
 with tab2:
     if result:
         intel = result.get("intelligence_report") or (
@@ -159,7 +235,7 @@ with tab2:
         )
         if intel:
             if result.get("escalated"):
-                st.warning("⚠️ Intelligence pipeline was triggered because active threats were detected.")
+                st.warning("⚠️ Intelligence pipeline triggered — active threats detected.")
             st.markdown(intel)
             st.download_button(
                 "⬇️ Download Intelligence Report (.md)",
@@ -174,11 +250,11 @@ with tab2:
     else:
         st.info("Run the system to see the threat intelligence report here.")
 
+# ── Tab 3: Risk Matrix ────────────────────────────────────────────────────────
 with tab3:
     if result:
         report_text = result.get("intelligence_report") or result.get("result", "")
         if "|" in report_text and ("Severity" in report_text or "Risk Score" in report_text):
-            # Extract markdown table lines
             lines = report_text.split("\n")
             in_table, table_lines = False, []
             for line in lines:
@@ -198,7 +274,60 @@ with tab3:
     else:
         st.info("Run the system to see the risk matrix here.")
 
+# ── Tab 4: Threat Trends ──────────────────────────────────────────────────────
 with tab4:
+    st.subheader("📈 Threat Detection Trends")
+
+    if not jobs_list:
+        st.info("No scan history yet. Run a few scans to see trends.")
+    else:
+        df = build_trend_data(jobs_list)
+
+        if df.empty:
+            st.info("No completed scans yet.")
+        else:
+            # ── Summary stats ──────────────────────────────────────────────
+            c1, c2, c3, c4 = st.columns(4)
+            total_scans    = len(df)
+            threat_scans   = df["Threats"].sum()
+            clean_scans    = total_scans - threat_scans
+            threat_rate    = round((threat_scans / total_scans) * 100, 1) if total_scans else 0
+
+            c1.metric("Total Scans",    total_scans)
+            c2.metric("Threats Found",  int(threat_scans))
+            c3.metric("Clean Scans",    int(clean_scans))
+            c4.metric("Threat Rate",    f"{threat_rate}%")
+
+            st.divider()
+
+            # ── Threat detection line chart ────────────────────────────────
+            st.markdown("**Threat Detections per Scan**")
+            chart_df = df[["Scan #", "Threats"]].set_index("Scan #")
+            st.line_chart(chart_df, use_container_width=True)
+
+            # ── Severity breakdown bar chart ───────────────────────────────
+            st.markdown("**Severity Breakdown**")
+            sev_counts = df["Severity"].value_counts().reset_index()
+            sev_counts.columns = ["Severity", "Count"]
+            sev_order = ["CRITICAL", "HIGH", "MEDIUM", "LOW"]
+            sev_counts["Severity"] = pd.Categorical(sev_counts["Severity"], categories=sev_order, ordered=True)
+            sev_counts = sev_counts.sort_values("Severity")
+            st.bar_chart(sev_counts.set_index("Severity"), use_container_width=True)
+
+            # ── Mode breakdown ─────────────────────────────────────────────
+            st.markdown("**Scan Mode Breakdown**")
+            mode_counts = df["Mode"].value_counts()
+            st.bar_chart(mode_counts, use_container_width=True)
+
+            # ── Recent scan table ──────────────────────────────────────────
+            st.markdown("**Last 10 Scans**")
+            display_df = df[["Scan #", "Time", "Threats", "Severity", "Mode"]].tail(10).copy()
+            display_df["Time"] = display_df["Time"].dt.strftime("%Y-%m-%d %H:%M")
+            display_df["Threats"] = display_df["Threats"].map({1: "⚠️ Yes", 0: "✅ No"})
+            st.dataframe(display_df, use_container_width=True, hide_index=True)
+
+# ── Tab 5: Job History ────────────────────────────────────────────────────────
+with tab5:
     col1, col2 = st.columns([1, 5])
     with col1:
         refresh = st.button("🔄 Refresh")
@@ -215,17 +344,42 @@ with tab4:
 
     if refresh or True:
         try:
-            jobs_res = requests.get(f"{API_BASE}/jobs", timeout=5).json()
+            jobs_res  = requests.get(f"{API_BASE}/jobs", timeout=5).json()
             jobs_list = jobs_res.get("jobs", [])
             if jobs_list:
                 for job in jobs_list:
                     icon = {"completed": "✅", "running": "⏳", "failed": "❌", "queued": "🕐"}.get(job["status"], "❓")
-                    escalated_str = {True: "Yes — threats found", False: "No — system clean", None: "Pending"}.get(job.get("escalated"), "—")
-                    with st.expander(f"{icon} `{job['job_id'][:12]}...`  |  {job.get('mode', '').upper()}  |  {job['status']}"):
+                    sev  = job.get("severity", "—")
+                    sev_icon = {"CRITICAL": "🔴", "HIGH": "🟠", "MEDIUM": "🟡", "LOW": "🟢"}.get(sev, "⚪")
+                    scheduled_tag = " 🤖" if job.get("scheduled") else ""
+                    escalated_str = {True: "⚠️ Threats found", False: "✅ Clean", None: "Pending"}.get(job.get("escalated"), "—")
+
+                    with st.expander(
+                        f"{icon} `{job['job_id'][:12]}...`  |  "
+                        f"{job.get('mode','').upper()}  |  "
+                        f"{job['status']}  |  "
+                        f"{sev_icon} {sev}{scheduled_tag}"
+                    ):
                         st.markdown(f"**Phase:** `{job.get('phase')}`")
                         st.markdown(f"**Escalated:** {escalated_str}")
+                        st.markdown(f"**Scheduled:** {'Yes 🤖' if job.get('scheduled') else 'No'}")
                         st.markdown(f"**Created:** {job.get('created_at', 'N/A')}")
                         st.markdown(f"**Completed:** {job.get('completed_at', 'N/A')}")
+
+                        timings = job.get("phase_timings", {})
+                        if timings:
+                            st.markdown("**Phase Timings:**")
+                            for phase, t in timings.items():
+                                start = t.get("started_at", "")
+                                end   = t.get("finished_at", "")
+                                if start and end:
+                                    try:
+                                        duration = (
+                                            datetime.fromisoformat(end) - datetime.fromisoformat(start)
+                                        ).seconds
+                                        st.markdown(f"- `{phase}`: {duration}s")
+                                    except:
+                                        st.markdown(f"- `{phase}`: {start} → {end}")
             else:
                 st.info("No jobs yet.")
         except Exception as e:
