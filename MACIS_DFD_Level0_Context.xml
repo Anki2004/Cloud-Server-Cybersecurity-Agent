@@ -1,0 +1,79 @@
+<mxfile>
+  <diagram name="DFD Level 0 - Context">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="800" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- Central System -->
+        <mxCell id="system" value="MACIS&#xa;Multi-Agent Cybersecurity&#xa;Intelligence System" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;fontStyle=1;strokeWidth=3;" vertex="1" parent="1">
+          <mxGeometry x="430" y="300" width="280" height="120" as="geometry"/>
+        </mxCell>
+
+        <!-- External Entities -->
+        <mxCell id="cloud_server" value="Cloud Server&#xa;(/var/log/auth.log&#xa;/var/log/syslog&#xa;Network + Filesystem)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;fontStyle=1;double=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="300" width="180" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="groq_ext" value="Groq API&#xa;(LLM Inference&#xa;llama3-70b-8192)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;fontStyle=1;double=1;" vertex="1" parent="1">
+          <mxGeometry x="900" y="160" width="180" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="exa_ext" value="Exa Search API&#xa;(Threat Intelligence&#xa;Real-time threats)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;fontStyle=1;double=1;" vertex="1" parent="1">
+          <mxGeometry x="900" y="300" width="180" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="nvd_ext" value="NVD NIST API&#xa;(CVE Database&#xa;Vulnerability Data)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;fontStyle=1;double=1;" vertex="1" parent="1">
+          <mxGeometry x="900" y="440" width="180" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="slack_ext" value="Slack&#xa;(Webhook Alerts&#xa;HIGH / CRITICAL only)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1;double=1;" vertex="1" parent="1">
+          <mxGeometry x="430" y="560" width="180" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="admin_ext" value="Admin / User&#xa;(Streamlit UI&#xa;REST API)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;fontStyle=1;double=1;" vertex="1" parent="1">
+          <mxGeometry x="130" y="560" width="160" height="80" as="geometry"/>
+        </mxCell>
+
+        <!-- Data Flows -->
+        <!-- Cloud Server → System -->
+        <mxCell id="e1" value="Logs + Network +&#xa;Filesystem Data" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#6c8ebf;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="cloud_server" target="system" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- System → Groq -->
+        <mxCell id="e2" value="LLM Prompts" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#9673a6;exitX=1;exitY=0.3;exitDx=0;exitDy=0;" edge="1" source="system" target="groq_ext" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e2b" value="Agent Responses" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#9673a6;dashed=1;" edge="1" source="groq_ext" target="system" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- System → Exa -->
+        <mxCell id="e3" value="Threat Query" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#9673a6;" edge="1" source="system" target="exa_ext" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e3b" value="Threat Articles" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#9673a6;dashed=1;" edge="1" source="exa_ext" target="system" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- System → NVD -->
+        <mxCell id="e4" value="CVE Keyword" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#9673a6;" edge="1" source="system" target="nvd_ext" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e4b" value="CVE Records" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#9673a6;dashed=1;" edge="1" source="nvd_ext" target="system" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- System → Slack -->
+        <mxCell id="e5" value="HIGH/CRITICAL Alert" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#b85450;" edge="1" source="system" target="slack_ext" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Admin → System -->
+        <mxCell id="e6" value="Scan Request /&#xa;Job Query" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#6c8ebf;" edge="1" source="admin_ext" target="system" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e6b" value="Threat Reports /&#xa;Job Status" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#6c8ebf;dashed=1;" edge="1" source="system" target="admin_ext" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

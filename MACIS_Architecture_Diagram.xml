@@ -1,0 +1,95 @@
+<mxfile>
+  <diagram name="Architecture Diagram">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- External: Logs (left) -->
+        <mxCell id="logs" value="System Logs&#xa;/ CloudWatch" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="360" width="160" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- External: Groq API (right top) -->
+        <mxCell id="groq" value="Groq API (LLM)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1350" y="200" width="160" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- External: Slack (right mid) -->
+        <mxCell id="slack" value="Slack Alerts" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1350" y="360" width="160" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- External: Admin/User (right bottom) -->
+        <mxCell id="user" value="Admin / User" style="shape=mxgraph.uml.actor;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="1385" y="500" width="40" height="80" as="geometry"/>
+        </mxCell>
+
+        <!-- AWS EC2 Container -->
+        <mxCell id="aws" value="AWS EC2 Instance" style="points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_ec2_instance_contents;grStroke=1;verticalLabelPosition=top;verticalAlign=bottom;fillColor=#FF980022;strokeColor=#FF9800;fontStyle=1;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="230" y="80" width="1060" height="620" as="geometry"/>
+        </mxCell>
+
+        <!-- APScheduler -->
+        <mxCell id="scheduler" value="APScheduler" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="280" y="200" width="160" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- FastAPI Backend -->
+        <mxCell id="fastapi" value="FastAPI Backend" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="530" y="200" width="160" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Detection Tools -->
+        <mxCell id="tools" value="Detection Tools&#xa;(System / Network / File)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="530" y="360" width="200" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- CrewAI Agents -->
+        <mxCell id="agents" value="CrewAI Agents&#xa;(6 Agents)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="820" y="270" width="200" height="70" as="geometry"/>
+        </mxCell>
+
+        <!-- Redis -->
+        <mxCell id="redis" value="D1   Redis" style="shape=mxgraph.dfd.dataStore;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="820" y="480" width="160" height="50" as="geometry"/>
+        </mxCell>
+
+        <!-- Streamlit Dashboard -->
+        <mxCell id="streamlit" value="Streamlit Dashboard" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="480" width="170" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Connections -->
+        <mxCell id="e1" value="Raw Logs" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#6c8ebf;" edge="1" source="logs" target="tools" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e2" value="Scan Trigger" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#d6b656;" edge="1" source="scheduler" target="fastapi" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e3" value="Dispatch" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#82b366;" edge="1" source="fastapi" target="agents" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e4" value="Detection Results" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#82b366;" edge="1" source="tools" target="agents" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e5" value="LLM Inference" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#9673a6;" edge="1" source="agents" target="groq" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e6" value="Job Queue" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#666666;" edge="1" source="agents" target="redis" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e7" value="Alert" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#b85450;" edge="1" source="agents" target="slack" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e8" value="Report Data" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#b85450;" edge="1" source="agents" target="streamlit" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e9" value="View Dashboard" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#6c8ebf;" edge="1" source="user" target="streamlit" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

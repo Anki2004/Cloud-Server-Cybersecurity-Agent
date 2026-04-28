@@ -1,0 +1,190 @@
+<mxfile>
+  <diagram name="Flowchart">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- START -->
+        <mxCell id="start" value="START" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="350" y="30" width="120" height="50" as="geometry"/>
+        </mxCell>
+
+        <!-- Trigger -->
+        <mxCell id="trigger" value="Trigger Scan&#xa;(API POST /run  or  APScheduler)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="290" y="120" width="240" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Create Job in Redis -->
+        <mxCell id="redis_job" value="Create Job Record in Redis&#xa;{status: queued, job_id}" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="290" y="220" width="240" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Log Ingestion -->
+        <mxCell id="ingest" value="Log Ingestion&#xa;(/var/log/auth.log, syslog&#xa;+ CloudWatch via boto3)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="280" y="322" width="260" height="70" as="geometry"/>
+        </mxCell>
+
+        <!-- Run Detection Tools -->
+        <mxCell id="detect" value="Phase 1 — Run Detection Tools&#xa;① System Log Analyzer&#xa;② Network Traffic Monitor&#xa;③ File System Monitor" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="265" y="435" width="290" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- Decision: Threats Found? -->
+        <mxCell id="decision" value="Threats Found?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="315" y="570" width="190" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- NO path: Store clean result -->
+        <mxCell id="no_threat" value="Update Redis&#xa;{status: completed&#xa;threats: none}" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="680" width="185" height="70" as="geometry"/>
+        </mxCell>
+
+        <!-- YES path: Phase 2 start -->
+        <mxCell id="phase2" value="Phase 2 — Intelligence Pipeline&#xa;(escalate threats)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="480" y="575" width="225" height="70" as="geometry"/>
+        </mxCell>
+
+        <!-- Parallel block -->
+        <mxCell id="parallel_bar_top" value="" style="line;strokeColor=#d6b656;strokeWidth=3;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="390" y="690" width="200" height="10" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="threat_analyst" value="🔍 Threat Analyst&#xa;(Exa Search API)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="360" y="715" width="170" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="vuln_researcher" value="🧪 Vulnerability Researcher&#xa;(NVD NIST API)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="545" y="715" width="175" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="parallel_bar_bot" value="" style="line;strokeColor=#d6b656;strokeWidth=3;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="390" y="785" width="200" height="10" as="geometry"/>
+        </mxCell>
+
+        <!-- Merge -->
+        <mxCell id="merge" value="Merge Intelligence Results" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="330" y="810" width="220" height="55" as="geometry"/>
+        </mxCell>
+
+        <!-- Incident Advisor -->
+        <mxCell id="incident" value="🛠️ Incident Response Advisor&#xa;(remediation steps)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="300" y="905" width="230" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Report Writer -->
+        <mxCell id="report_writer" value="📝 Report Writer&#xa;(generate full_report.md)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="300" y="1005" width="230" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Risk Scorer -->
+        <mxCell id="risk_scorer" value="📊 Risk Scorer&#xa;(compute severity score)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="300" y="1105" width="230" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Save report -->
+        <mxCell id="save_report" value="Save *.md to /app/outputs" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="300" y="1205" width="230" height="55" as="geometry"/>
+        </mxCell>
+
+        <!-- Alert decision -->
+        <mxCell id="alert_decision" value="Severity&#xa;HIGH or CRITICAL?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="320" y="1300" width="190" height="80" as="geometry"/>
+        </mxCell>
+
+        <!-- Send Slack -->
+        <mxCell id="slack" value="Send Slack Webhook Alert&#xa;{severity, summary, job_id}" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="560" y="1310" width="215" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Update Redis final -->
+        <mxCell id="redis_done" value="Update Redis&#xa;{status: completed}" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="300" y="1425" width="230" height="55" as="geometry"/>
+        </mxCell>
+
+        <!-- END -->
+        <mxCell id="end" value="END" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="355" y="1525" width="120" height="50" as="geometry"/>
+        </mxCell>
+
+        <!-- ══ EDGES ══ -->
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#333;" edge="1" source="start" target="trigger" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#333;" edge="1" source="trigger" target="redis_job" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#333;" edge="1" source="redis_job" target="ingest" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#333;" edge="1" source="ingest" target="detect" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#333;" edge="1" source="detect" target="decision" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- NO branch -->
+        <mxCell id="e6" value="NO" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#82b366;fontStyle=1;fontSize=11;" edge="1" source="decision" target="no_threat" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e6b" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#82b366;" edge="1" source="no_threat" target="end" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- YES branch -->
+        <mxCell id="e7" value="YES" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#d6b656;fontStyle=1;fontSize=11;" edge="1" source="decision" target="phase2" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Phase 2 → parallel -->
+        <mxCell id="e8a" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#d6b656;" edge="1" source="phase2" target="threat_analyst" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e8b" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#d6b656;" edge="1" source="phase2" target="vuln_researcher" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Parallel → merge -->
+        <mxCell id="e9a" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#d6b656;" edge="1" source="threat_analyst" target="merge" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e9b" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#d6b656;" edge="1" source="vuln_researcher" target="merge" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Sequential pipeline -->
+        <mxCell id="e10" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#b85450;" edge="1" source="merge" target="incident" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e11" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#b85450;" edge="1" source="incident" target="report_writer" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e12" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#b85450;" edge="1" source="report_writer" target="risk_scorer" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e13" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#666;" edge="1" source="risk_scorer" target="save_report" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e14" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#333;" edge="1" source="save_report" target="alert_decision" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Alert decision branches -->
+        <mxCell id="e15" value="YES" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#b85450;fontStyle=1;fontSize=11;" edge="1" source="alert_decision" target="slack" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e15b" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#b85450;" edge="1" source="slack" target="redis_done" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e16" value="NO" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#82b366;fontStyle=1;fontSize=11;" edge="1" source="alert_decision" target="redis_done" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e17" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#333;" edge="1" source="redis_done" target="end" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

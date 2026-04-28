@@ -18,7 +18,6 @@ def get_redis():
 
 
 class JobStore:
-    """Redis-backed job store with dict fallback."""
 
     def __init__(self):
         self._fallback: dict = {}
@@ -76,7 +75,6 @@ class JobStore:
         return self[key]
 
     def update_job(self, key: str, updates: dict):
-        """Atomic read-modify-write for job updates."""
         try:
             current = self[key]
         except KeyError:
