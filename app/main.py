@@ -1,3 +1,6 @@
+import os
+os.environ["OPENAI_API_KEY"] = "sk-fake-not-used"
+os.environ["OPENAI_MODEL_NAME"] = "gpt-4"
 import asyncio
 import os
 import uuid
@@ -262,7 +265,7 @@ def _run_downstream_crew(threat_output: str, vuln_output: str) -> str:
         process=Process.sequential,
         verbose=2,
         full_output=True,
-        memory=True,
+        # memory=True,
     )
     result = crew.kickoff()
     return result.get("final_output", "") if isinstance(result, dict) else str(result)

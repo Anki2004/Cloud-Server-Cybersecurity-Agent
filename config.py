@@ -10,3 +10,4 @@ OUTPUTS_DIR = os.path.join(os.path.dirname(__file__), "outputs")
 
 # Ensure outputs directory exists
 os.makedirs(OUTPUTS_DIR, exist_ok=True)
+os.environ["OPENAI_API_KEY"] = "sk-fake-not-used"
