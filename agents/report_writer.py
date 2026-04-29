@@ -20,5 +20,5 @@ cybersecurity_writer = Agent(
     allow_delegation=False,
     llm=llm,
     max_iter=5,
-    memory=True,
+    # memory=True,
 )

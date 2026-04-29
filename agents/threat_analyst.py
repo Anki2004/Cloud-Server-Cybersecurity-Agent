@@ -21,5 +21,5 @@ threat_analyst = Agent(
     llm=llm,
     tools=[CybersecurityThreatsTool()],
     max_iter=5,
-    memory=True,
+    # memory=True,
 )

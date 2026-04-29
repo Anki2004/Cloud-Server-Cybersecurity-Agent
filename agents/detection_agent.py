@@ -40,5 +40,5 @@ detection_agent = Agent(
     allow_delegation=False,
     llm=llm,
     max_iter=8,
-    memory=True,
+    # memory=True,
 )
