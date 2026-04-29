@@ -36,6 +36,8 @@ from tasks.risk_tasks import risk_scoring_task
 
 from config import GROQ_API_KEY, MODEL_NAME, OUTPUTS_DIR
 from logger import get_logger
+from dotenv import load_dotenv
+load_dotenv()
 
 logger = get_logger(__name__)
 os.environ["GROQ_API_KEY"] = GROQ_API_KEY

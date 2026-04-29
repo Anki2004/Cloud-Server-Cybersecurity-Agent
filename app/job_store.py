@@ -1,13 +1,3 @@
-"""
-Job Store — Three-tier storage with automatic fallback
-======================================================
-Priority: PostgreSQL (persistent) → Redis (cache/fast) → dict (dev fallback)
-
-PostgreSQL stores ALL jobs permanently.
-Redis caches hot jobs for fast polling (24hr TTL).
-Dict fallback when both are unavailable.
-"""
-
 import json
 import os
 import logging
