@@ -206,8 +206,7 @@ def build_detection_crew(log_paths: str, scan_hours: int) -> Crew:
         agents=[detection_agent],
         tasks=[runtime_task],
         process=Process.sequential,
-        verbose=2,
-        full_output=True,
+        verbose = True,
     )
 
 
@@ -216,11 +215,11 @@ def _run_threat_crew() -> str:
         agents=[threat_analyst],
         tasks=[threat_analysis_task],
         process=Process.sequential,
-        verbose=2,
-        full_output=True,
+        verbose = True,
+        
     )
     result = crew.kickoff()
-    return result.get("final_output", "") if isinstance(result, dict) else str(result)
+    return str(result)
 
 
 def _run_vulnerability_crew() -> str:
@@ -228,11 +227,11 @@ def _run_vulnerability_crew() -> str:
         agents=[vulnerability_researcher],
         tasks=[vulnerability_research_task],
         process=Process.sequential,
-        verbose=2,
-        full_output=True,
+        verbose = True,
+        
     )
     result = crew.kickoff()
-    return result.get("final_output", "") if isinstance(result, dict) else str(result)
+    return str(result)
 
 
 def _run_downstream_crew(threat_output: str, vuln_output: str) -> str:
@@ -263,12 +262,12 @@ def _run_downstream_crew(threat_output: str, vuln_output: str) -> str:
         agents=[incident_response_advisor, cybersecurity_writer, risk_scorer],
         tasks=[incident_task_rt, report_task_rt, risk_task_rt],
         process=Process.sequential,
-        verbose=2,
-        full_output=True,
+        verbose = True,
+        
         # memory=True,
     )
     result = crew.kickoff()
-    return result.get("final_output", "") if isinstance(result, dict) else str(result)
+    return str(result)
 
 
 def build_intelligence_crew_parallel() -> tuple[str, str, str]:

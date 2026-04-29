@@ -1,4 +1,4 @@
-from crewai_tools import BaseTool
+from crewai.tools import BaseTool
 import re
 from collections import Counter
 from logger import get_logger
