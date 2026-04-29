@@ -1,0 +1,105 @@
+{
+  "benchmark_run": "2026-04-29T22:32:15.801256",
+  "summary": {
+    "total_scenarios": 7,
+    "detection_accuracy": 100.0,
+    "severity_accuracy": 100.0,
+    "overall_accuracy": 100.0,
+    "false_positive_rate": 0.0,
+    "false_positives": 0,
+    "false_negatives": 0
+  },
+  "scenarios": [
+    {
+      "scenario_id": "SC-01",
+      "name": "SSH Brute Force Campaign",
+      "detection_correct": true,
+      "severity_correct": true,
+      "true_positives": [
+        "brute_force_ssh"
+      ],
+      "false_positives": [],
+      "false_negatives": [],
+      "expected_severity": "HIGH",
+      "actual_severity": "HIGH"
+    },
+    {
+      "scenario_id": "SC-02",
+      "name": "Root Login Success",
+      "detection_correct": true,
+      "severity_correct": true,
+      "true_positives": [
+        "successful_root_login"
+      ],
+      "false_positives": [],
+      "false_negatives": [],
+      "expected_severity": "CRITICAL",
+      "actual_severity": "CRITICAL"
+    },
+    {
+      "scenario_id": "SC-03",
+      "name": "Malware Process Execution",
+      "detection_correct": true,
+      "severity_correct": true,
+      "true_positives": [
+        "malware_process"
+      ],
+      "false_positives": [],
+      "false_negatives": [],
+      "expected_severity": "CRITICAL",
+      "actual_severity": "CRITICAL"
+    },
+    {
+      "scenario_id": "SC-04",
+      "name": "Privilege Escalation",
+      "detection_correct": true,
+      "severity_correct": true,
+      "true_positives": [
+        "privilege_escalation"
+      ],
+      "false_positives": [],
+      "false_negatives": [],
+      "expected_severity": "HIGH",
+      "actual_severity": "HIGH"
+    },
+    {
+      "scenario_id": "SC-05",
+      "name": "New Account Created",
+      "detection_correct": true,
+      "severity_correct": true,
+      "true_positives": [
+        "new_account_created"
+      ],
+      "false_positives": [],
+      "false_negatives": [],
+      "expected_severity": "MEDIUM",
+      "actual_severity": "MEDIUM"
+    },
+    {
+      "scenario_id": "SC-06",
+      "name": "Multi-Stage Attack (Brute Force + Root Login)",
+      "detection_correct": true,
+      "severity_correct": true,
+      "true_positives": [
+        "ssh_root_attempt",
+        "successful_root_login",
+        "brute_force_ssh"
+      ],
+      "false_positives": [],
+      "false_negatives": [],
+      "expected_severity": "CRITICAL",
+      "actual_severity": "CRITICAL"
+    },
+    {
+      "scenario_id": "SC-07",
+      "name": "Clean System (No Threats)",
+      "detection_correct": true,
+      "severity_correct": true,
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [],
+      "expected_severity": "LOW",
+      "actual_severity": "LOW"
+    }
+  ]
+}

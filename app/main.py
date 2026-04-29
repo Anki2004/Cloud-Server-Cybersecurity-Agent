@@ -615,3 +615,18 @@ def list_jobs():
 def clear_jobs():
     jobs.clear()
     return {"message": "All jobs cleared."}
+
+@app.get("/benchmark")
+def run_accuracy_benchmark():
+    """Run detection accuracy benchmark — returns accuracy metrics."""
+    import subprocess
+    result = subprocess.run(
+        ["python", "tests/benchmarks/run_benchmark.py"],
+        capture_output=True, text=True, cwd="/app"
+    )
+    try:
+        with open("/app/tests/benchmarks/benchmark_report.json") as f:
+            import json
+            return json.load(f)
+    except Exception:
+        return {"error": result.stderr, "output": result.stdout}
