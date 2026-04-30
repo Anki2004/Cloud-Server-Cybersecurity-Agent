@@ -4,9 +4,9 @@ load_dotenv()
 from config import GROQ_API_KEY, EXA_API_KEY, MODEL_NAME
 from crewai import Agent
 from langchain_groq import ChatGroq
-from tools.log_analysis_tool import LogAnalysisTool
-from tools.network_monitor_tool import NetworkMonitorTool
-from tools.filesystem_monitor_tool import FileSystemMonitorTool
+from tools.log_analysis_tool import log_analysis_tool
+from tools.network_monitor_tool import network_monitor_tool
+from tools.filesystem_monitor_tool import filesystem_monitor_tool
 from config import GROQ_API_KEY, MODEL_NAME
 import os
  

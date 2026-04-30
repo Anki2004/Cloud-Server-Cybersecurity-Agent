@@ -1,6 +1,6 @@
 from crewai import Agent
 from langchain_groq import ChatGroq
-from tools.exa_tools import CybersecurityThreatsTool
+from tools.exa_tools import cybersecurity_threats_tool
 from config import GROQ_API_KEY, MODEL_NAME
 import os
 
