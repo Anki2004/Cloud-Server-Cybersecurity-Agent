@@ -1,4 +1,4 @@
-from crewai.tools import BaseTool
+from crewai import BaseTool
 from exa_py import Exa
 from config import EXA_API_KEY
 from logger import get_logger

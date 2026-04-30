@@ -1,4 +1,4 @@
-from crewai.tools import BaseTool
+from crewai import BaseTool
 import os
 import stat
 from datetime import datetime, timedelta
