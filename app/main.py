@@ -42,6 +42,7 @@ from config import GROQ_API_KEY, MODEL_NAME, OUTPUTS_DIR
 from logger import get_logger
 from dotenv import load_dotenv
 load_dotenv()
+from app.soar import run_soar
 
 logger = get_logger(__name__)
 os.environ["GROQ_API_KEY"] = GROQ_API_KEY
@@ -396,6 +397,9 @@ def run_detect_mode(job_id: str, request: CrewRequest):
         summary  = downstream_out[:300]
         send_slack_alert(job_id, severity, summary)
 
+        # ── SOAR: auto-block attacking IPs on CRITICAL ─────────────────
+        soar_result = run_soar(job_id, combined, severity)
+
         jobs.update_job(job_id,({
             "status":               "completed",
             "phase":                "completed",
@@ -403,6 +407,9 @@ def run_detect_mode(job_id: str, request: CrewRequest):
             "intelligence_report":  intel_output,
             "output_file":          report_path,
             "severity":             severity,
+            "soar_triggered":       soar_result["soar_triggered"],
+            "blocked_ips":          soar_result["blocked_ips"],
+            "soar_errors":          soar_result["errors"],
             "completed_at":         datetime.now().isoformat(),
         }))
         logger.info(f"[{job_id}] DETECT mode completed [{severity}]")
@@ -513,14 +520,17 @@ def root():
             f"Auto-scan every {SCHEDULER_INTERVAL_MIN} min via APScheduler",
             "Slack webhook alerts for HIGH/CRITICAL threats",
             "CloudWatch log ingestion via boto3 (set CLOUDWATCH_LOG_GROUP env var)",
+            "SOAR: auto-blocks attacking IPs in AWS SG on CRITICAL threats",
         ],
         "endpoints": {
-            "POST /run":              "Submit a job",
-            "GET  /results/{job_id}": "Poll job status",
-            "GET  /jobs":             "List all jobs",
-            "DELETE /jobs":           "Clear job history",
-            "GET  /scheduler":        "Scheduler status",
-            "GET  /health":           "Health check",
+            "POST /run":                "Submit a job",
+            "GET  /results/{job_id}":   "Poll job status",
+            "GET  /jobs":               "List all jobs",
+            "DELETE /jobs":             "Clear job history",
+            "GET  /scheduler":          "Scheduler status",
+            "GET  /soar/blocked":       "List all SOAR-blocked IPs",
+            "DELETE /soar/unblock/{ip}":"Unblock an IP",
+            "GET  /health":             "Health check",
         },
     }
 
@@ -533,7 +543,38 @@ def health():
         "scheduler": scheduler.running,
         "slack":     bool(SLACK_WEBHOOK_URL),
         "cloudwatch": bool(CLOUDWATCH_LOG_GROUP),
+        "soar":      bool(os.getenv("SOAR_SG_NAME", "multi-agent-cybersec-sg")),
     }
+
+
+@app.get("/soar/blocked")
+def get_blocked_ips():
+    """List all IPs auto-blocked by SOAR across all jobs."""
+    blocked = set()
+    for job in jobs.values():
+        for ip in job.get("blocked_ips", []):
+            blocked.add(ip)
+    return {"total": len(blocked), "blocked_ips": sorted(blocked)}
+
+
+@app.delete("/soar/unblock/{ip}")
+def unblock_ip_endpoint(ip: str):
+    """Manually unblock an IP from the AWS security group."""
+    try:
+        import boto3
+        from app.soar import _get_sg_id, unblock_ip, AWS_REGION, SG_NAME
+        ec2 = boto3.client("ec2", region_name=AWS_REGION)
+        sg_id = _get_sg_id(ec2, SG_NAME)
+        if not sg_id:
+            raise HTTPException(404, f"Security group '{SG_NAME}' not found")
+        success = unblock_ip(ec2, sg_id, ip)
+        if success:
+            return {"status": "unblocked", "ip": ip}
+        raise HTTPException(500, f"Failed to unblock {ip}")
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(500, str(e))
 
 
 @app.get("/scheduler")

@@ -1,0 +1,1 @@
+sudo docker-compose logs ui 2>&1 | grep -E "Local|Network|External|URL"
