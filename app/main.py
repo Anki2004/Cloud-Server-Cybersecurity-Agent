@@ -19,7 +19,8 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.interval import IntervalTrigger
 
 from crewai import Crew, Process, Task
-from langchain_groq import ChatGroq
+from crewai import LLM
+
 
 # ── Agents ────────────────────────────────────────────────────────────────────
 from agents.detection_agent import detection_agent
@@ -45,7 +46,7 @@ load_dotenv()
 logger = get_logger(__name__)
 os.environ["GROQ_API_KEY"] = GROQ_API_KEY
 os.makedirs(OUTPUTS_DIR, exist_ok=True)
-
+llm = LLM(model=f"groq/{MODEL_NAME}", api_key=GROQ_API_KEY, temperature=0)
 # ── Config from env ────────────────────────────────────────────────────────────
 SLACK_WEBHOOK_URL     = os.getenv("SLACK_WEBHOOK_URL", "")
 CLOUDWATCH_LOG_GROUP  = os.getenv("CLOUDWATCH_LOG_GROUP", "")

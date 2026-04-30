@@ -1,18 +1,20 @@
 import os
 from dotenv import load_dotenv
 load_dotenv()
-from config import GROQ_API_KEY, EXA_API_KEY, MODEL_NAME
-from crewai import Agent
-from langchain_groq import ChatGroq
+
+from crewai import Agent, LLM
 from tools.log_analysis_tool import log_analysis_tool
 from tools.network_monitor_tool import network_monitor_tool
 from tools.filesystem_monitor_tool import filesystem_monitor_tool
 from config import GROQ_API_KEY, MODEL_NAME
-import os
- 
+
 os.environ["GROQ_API_KEY"] = GROQ_API_KEY
 
-llm = ChatGroq(temperature=0, model_name=MODEL_NAME)
+llm = LLM(
+    model=f"groq/{MODEL_NAME}",
+    api_key=GROQ_API_KEY,
+    temperature=0,
+)
 
 detection_agent = Agent(
     role="Cloud Security Detection Agent",
@@ -31,14 +33,9 @@ detection_agent = Agent(
         "attempt in logs combined with a new SSH key in the filesystem is far "
         "more serious than either finding alone. You never skip a tool."
     ),
-    tools=[
-        log_analysis_tool,
-        network_monitor_tool,
-        filesystem_monitor_tool,
-    ],
+    tools=[log_analysis_tool, network_monitor_tool, filesystem_monitor_tool],
     verbose=True,
     allow_delegation=False,
     llm=llm,
     max_iter=8,
-    # memory=True,
 )

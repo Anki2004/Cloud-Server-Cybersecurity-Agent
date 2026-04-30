@@ -1,12 +1,18 @@
-from crewai import Agent
-from langchain_groq import ChatGroq
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+from crewai import Agent, LLM
 from tools.exa_tools import cybersecurity_threats_tool
 from config import GROQ_API_KEY, MODEL_NAME
-import os
 
 os.environ["GROQ_API_KEY"] = GROQ_API_KEY
 
-llm = ChatGroq(temperature=0, model_name=MODEL_NAME)
+llm = LLM(
+    model=f"groq/{MODEL_NAME}",
+    api_key=GROQ_API_KEY,
+    temperature=0,
+)
 
 threat_analyst = Agent(
     role="Cybersecurity Threat Intelligence Analyst",
@@ -21,5 +27,4 @@ threat_analyst = Agent(
     llm=llm,
     tools=[cybersecurity_threats_tool],
     max_iter=5,
-    # memory=True,
 )

@@ -1,11 +1,17 @@
-from crewai import Agent
-from langchain_groq import ChatGroq
-from config import GROQ_API_KEY, MODEL_NAME
 import os
+from dotenv import load_dotenv
+load_dotenv()
+
+from crewai import Agent, LLM
+from config import GROQ_API_KEY, MODEL_NAME
 
 os.environ["GROQ_API_KEY"] = GROQ_API_KEY
 
-llm = ChatGroq(temperature=0, model_name=MODEL_NAME)
+llm = LLM(
+    model=f"groq/{MODEL_NAME}",
+    api_key=GROQ_API_KEY,
+    temperature=0,
+)
 
 cybersecurity_writer = Agent(
     role="Cybersecurity Report Writer",
@@ -20,5 +26,4 @@ cybersecurity_writer = Agent(
     allow_delegation=False,
     llm=llm,
     max_iter=5,
-    # memory=True,
 )
