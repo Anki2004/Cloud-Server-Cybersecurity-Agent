@@ -1,174 +1,156 @@
-<mxfile>
-  <diagram name="DFD Level 1">
-    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1000" math="0" shadow="0">
-      <root>
-        <mxCell id="0"/>
-        <mxCell id="1" parent="0"/>
+<mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
 
-        <!-- ══ EXTERNAL ENTITIES ══ -->
-        <mxCell id="cloud_server" value="Cloud Server&#xa;(logs + network + fs)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;fontStyle=1;double=1;" vertex="1" parent="1">
-          <mxGeometry x="30" y="200" width="160" height="70" as="geometry"/>
-        </mxCell>
-        <mxCell id="admin" value="Admin / User&#xa;(API or Streamlit UI)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;fontStyle=1;double=1;" vertex="1" parent="1">
-          <mxGeometry x="30" y="80" width="160" height="70" as="geometry"/>
-        </mxCell>
-        <mxCell id="scheduler_ext" value="APScheduler&#xa;(auto every N min)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;double=1;" vertex="1" parent="1">
-          <mxGeometry x="30" y="330" width="160" height="70" as="geometry"/>
-        </mxCell>
-        <mxCell id="groq_ext" value="Groq API&#xa;(LLM inference)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;fontStyle=1;double=1;" vertex="1" parent="1">
-          <mxGeometry x="1580" y="300" width="160" height="70" as="geometry"/>
-        </mxCell>
-        <mxCell id="exa_ext" value="Exa Search API&#xa;(threat intel)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;fontStyle=1;double=1;" vertex="1" parent="1">
-          <mxGeometry x="1580" y="430" width="160" height="70" as="geometry"/>
-        </mxCell>
-        <mxCell id="nvd_ext" value="NVD NIST API&#xa;(CVE data)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;fontStyle=1;double=1;" vertex="1" parent="1">
-          <mxGeometry x="1580" y="560" width="160" height="70" as="geometry"/>
-        </mxCell>
-        <mxCell id="slack_ext" value="Slack&#xa;(webhook)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1;double=1;" vertex="1" parent="1">
-          <mxGeometry x="1200" y="800" width="160" height="70" as="geometry"/>
-        </mxCell>
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!--                  LEVEL 0 — CONTEXT DIAGRAM             -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <mxCell id="l0title" value="DFD Level 0 — Context Diagram" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="200" y="20" width="600" height="30" as="geometry" />
+    </mxCell>
 
-        <!-- ══ DATA STORES ══ -->
-        <mxCell id="redis_store" value="D1   Redis Job Store&#xa;(job:{id}, TTL 24h)" style="shape=mxgraph.dfd.dataStore;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="430" y="80" width="210" height="55" as="geometry"/>
-        </mxCell>
-        <mxCell id="outputs_store" value="D2   /app/outputs&#xa;(*.md reports)" style="shape=mxgraph.dfd.dataStore;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="430" y="860" width="210" height="55" as="geometry"/>
-        </mxCell>
+    <!-- Central Process -->
+    <mxCell id="p0" value="Multi-Agent&#xa;Cybersecurity&#xa;Intelligence System" style="ellipse;whiteSpace=wrap;html=1;fillColor=#007BFF;strokeColor=#005BBB;fontColor=#ffffff;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="420" y="140" width="200" height="120" as="geometry" />
+    </mxCell>
 
-        <!-- ══ PROCESSES ══ -->
+    <!-- External Entities Level 0 -->
+    <mxCell id="ee1" value="SOC Analyst" style="shape=mxgraph.dfd.externalEntity;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="80" y="160" width="120" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="ee2" value="System Admin" style="shape=mxgraph.dfd.externalEntity;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="80" y="280" width="120" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="ee3" value="NVD Database" style="shape=mxgraph.dfd.externalEntity;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="840" y="110" width="120" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="ee4" value="Exa Search API" style="shape=mxgraph.dfd.externalEntity;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="840" y="210" width="120" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="ee5" value="AWS EC2 (SOAR)" style="shape=mxgraph.dfd.externalEntity;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="840" y="310" width="120" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="ee6" value="Slack Webhook" style="shape=mxgraph.dfd.externalEntity;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="420" y="340" width="120" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="ee7" value="Server Logs /&#xa;CloudWatch" style="shape=mxgraph.dfd.externalEntity;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="200" y="50" width="120" height="60" as="geometry" />
+    </mxCell>
 
-        <!-- P1: Job Submission -->
-        <mxCell id="p1" value="1.0&#xa;Job Submission&#xa;(FastAPI POST /run&#xa;+ Scheduler)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="290" y="180" width="185" height="90" as="geometry"/>
-        </mxCell>
+    <!-- Level 0 Flows -->
+    <mxCell id="f0_1" value="Job Request&#xa;(mode, query, log_paths)" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;fillColor=#dae8fc;" edge="1" source="ee1" target="p0" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="f0_2" value="Job Status / Report" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;" edge="1" source="p0" target="ee1" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="200" y="220" /></Array></mxGeometry></mxCell>
+    <mxCell id="f0_3" value="SOAR / Scheduler Commands" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;" edge="1" source="ee2" target="p0" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="f0_4" value="CVE Data" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;" edge="1" source="ee3" target="p0" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="f0_5" value="Threat Intel Data" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;" edge="1" source="ee4" target="p0" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="f0_6" value="Block/Unblock IP Command" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;" edge="1" source="p0" target="ee5" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="f0_7" value="Alert Notification" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;" edge="1" source="p0" target="ee6" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="f0_8" value="Raw Logs / Events" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;" edge="1" source="ee7" target="p0" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
 
-        <!-- P2: Phase 1 Detection -->
-        <mxCell id="p2" value="2.0&#xa;Phase 1 Detection&#xa;(Detection Agent&#xa;Log + Network + FS)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="680" y="180" width="190" height="90" as="geometry"/>
-        </mxCell>
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!--                  LEVEL 1 — DETAILED DFD                -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <mxCell id="l1title" value="DFD Level 1 — Internal Data Flows" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="200" y="470" width="600" height="30" as="geometry" />
+    </mxCell>
 
-        <!-- P3: Escalation Decision -->
-        <mxCell id="p3" value="3.0&#xa;Escalation Decision&#xa;(threats found?&#xa;yes → P4, no → done)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="980" y="180" width="190" height="90" as="geometry"/>
-        </mxCell>
+    <!-- External Entities Level 1 (reused) -->
+    <mxCell id="l1_ee1" value="SOC Analyst /&#xa;Scheduler" style="shape=mxgraph.dfd.externalEntity;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="30" y="540" width="110" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="l1_ee2" value="Server Logs /&#xa;CloudWatch" style="shape=mxgraph.dfd.externalEntity;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="30" y="680" width="110" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="l1_ee3" value="NVD API" style="shape=mxgraph.dfd.externalEntity;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="1480" y="620" width="100" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="l1_ee4" value="Exa API" style="shape=mxgraph.dfd.externalEntity;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="1480" y="700" width="100" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="l1_ee5" value="AWS SG&#xa;(SOAR)" style="shape=mxgraph.dfd.externalEntity;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="1480" y="990" width="100" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="l1_ee6" value="Slack" style="shape=mxgraph.dfd.externalEntity;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="1480" y="900" width="100" height="50" as="geometry" />
+    </mxCell>
 
-        <!-- P4: Phase 2 Intelligence -->
-        <mxCell id="p4" value="4.0&#xa;Phase 2 Intelligence&#xa;(Threat Analyst ∥ Vuln Researcher&#xa;→ Incident Advisor&#xa;→ Report Writer → Risk Scorer)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="880" y="430" width="230" height="120" as="geometry"/>
-        </mxCell>
+    <!-- Processes Level 1 -->
+    <!-- P1: API Gateway / Job Manager -->
+    <mxCell id="p1" value="P1&#xa;API Gateway &amp;&#xa;Job Manager&#xa;(FastAPI /run)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#007BFF;strokeColor=#005BBB;fontColor=#ffffff;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="200" y="530" width="160" height="90" as="geometry" />
+    </mxCell>
 
-        <!-- P5: Alerting -->
-        <mxCell id="p5" value="5.0&#xa;Alerting&#xa;(severity check&#xa;→ Slack webhook)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="980" y="680" width="185" height="90" as="geometry"/>
-        </mxCell>
+    <!-- P2: Detection Agent -->
+    <mxCell id="p2" value="P2&#xa;Detection Agent&#xa;(Log + Network + FS)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="470" y="630" width="160" height="90" as="geometry" />
+    </mxCell>
 
-        <!-- P6: Report Storage -->
-        <mxCell id="p6" value="6.0&#xa;Report Storage&#xa;(save .md to&#xa;/app/outputs)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="630" y="680" width="185" height="90" as="geometry"/>
-        </mxCell>
+    <!-- P3: Threat Analyst -->
+    <mxCell id="p3" value="P3&#xa;Threat Analyst&#xa;(Exa Search)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="760" y="550" width="160" height="90" as="geometry" />
+    </mxCell>
 
-        <!-- ══ DATA FLOWS ══ -->
+    <!-- P4: Vulnerability Researcher -->
+    <mxCell id="p4" value="P4&#xa;Vulnerability&#xa;Researcher (NVD)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="760" y="690" width="160" height="90" as="geometry" />
+    </mxCell>
 
-        <!-- Admin / Scheduler → P1 -->
-        <mxCell id="e_admin_p1" value="POST /run&#xa;{mode, log_paths, hours}" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#6c8ebf;" edge="1" source="admin" target="p1" parent="1">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
-        <mxCell id="e_sched_p1" value="auto-scan trigger" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#d6b656;" edge="1" source="scheduler_ext" target="p1" parent="1">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
+    <!-- P5: Incident Advisor -->
+    <mxCell id="p5" value="P5&#xa;Incident Advisor&#xa;(Mitigation Plan)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="1020" y="580" width="160" height="90" as="geometry" />
+    </mxCell>
 
-        <!-- P1 → Redis -->
-        <mxCell id="e_p1_redis" value="create job record&#xa;{status: queued}" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#666;" edge="1" source="p1" target="redis_store" parent="1">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
+    <!-- P6: Report Writer -->
+    <mxCell id="p6" value="P6&#xa;Report Writer&#xa;(Markdown Report)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="1020" y="720" width="160" height="90" as="geometry" />
+    </mxCell>
 
-        <!-- P1 → P2 -->
-        <mxCell id="e_p1_p2" value="job_id + log_paths&#xa;+ scan_hours" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#82b366;" edge="1" source="p1" target="p2" parent="1">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
+    <!-- P7: Risk Scorer -->
+    <mxCell id="p7" value="P7&#xa;Risk Scorer&#xa;(Risk Matrix)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="1020" y="860" width="160" height="90" as="geometry" />
+    </mxCell>
 
-        <!-- Cloud Server → P2 -->
-        <mxCell id="e_cloud_p2" value="auth.log, syslog&#xa;network stats, fs data" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#6c8ebf;" edge="1" source="cloud_server" target="p2" parent="1">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
+    <!-- P8: SOAR Engine -->
+    <mxCell id="p8" value="P8&#xa;SOAR Engine&#xa;(IP Blocking)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="1260" y="970" width="160" height="90" as="geometry" />
+    </mxCell>
 
-        <!-- P2 → Groq (LLM) -->
-        <mxCell id="e_p2_groq" value="detection prompts" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#9673a6;" edge="1" source="p2" target="groq_ext" parent="1">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
+    <!-- P9: Slack Notifier -->
+    <mxCell id="p9" value="P9&#xa;Slack Notifier&#xa;(Alerts)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="1260" y="870" width="160" height="90" as="geometry" />
+    </mxCell>
 
-        <!-- P2 → P3 -->
-        <mxCell id="e_p2_p3" value="detection report&#xa;{threats, severity}" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#d6b656;" edge="1" source="p2" target="p3" parent="1">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
+    <!-- Data Stores -->
+    <mxCell id="ds1" value="DS1: Job Store (Redis + PostgreSQL)" style="shape=mxgraph.dfd.dataStore;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="200" y="790" width="240" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="ds2" value="DS2: Report Files (/outputs/*.md)" style="shape=mxgraph.dfd.dataStore;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="760" y="870" width="220" height="50" as="geometry" />
+    </mxCell>
 
-        <!-- P2 → P6 (save detection report) -->
-        <mxCell id="e_p2_p6" value="detection_report.md" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#666;" edge="1" source="p2" target="p6" parent="1">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
-
-        <!-- P3 → Redis (update status) -->
-        <mxCell id="e_p3_redis" value="update job&#xa;{escalated, phase}" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#666;" edge="1" source="p3" target="redis_store" parent="1">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
-
-        <!-- P3 → P4 (threats found) -->
-        <mxCell id="e_p3_p4" value="escalate&#xa;(threats found)" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#d6b656;dashed=1;" edge="1" source="p3" target="p4" parent="1">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
-
-        <!-- P4 → Groq -->
-        <mxCell id="e_p4_groq" value="agent prompts&#xa;(5 agents)" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#9673a6;" edge="1" source="p4" target="groq_ext" parent="1">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
-
-        <!-- P4 → Exa -->
-        <mxCell id="e_p4_exa" value="threat search query" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#9673a6;" edge="1" source="p4" target="exa_ext" parent="1">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
-
-        <!-- P4 → NVD -->
-        <mxCell id="e_p4_nvd" value="CVE keyword lookup" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#9673a6;" edge="1" source="p4" target="nvd_ext" parent="1">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
-
-        <!-- P4 → P5 -->
-        <mxCell id="e_p4_p5" value="full intelligence report&#xa;+ severity score" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#b85450;" edge="1" source="p4" target="p5" parent="1">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
-
-        <!-- P4 → P6 -->
-        <mxCell id="e_p4_p6" value="full_report.md" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#666;" edge="1" source="p4" target="p6" parent="1">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
-
-        <!-- P5 → Slack -->
-        <mxCell id="e_p5_slack" value="HIGH/CRITICAL webhook&#xa;{severity, summary, job_id}" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#b85450;" edge="1" source="p5" target="slack_ext" parent="1">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
-
-        <!-- P5 → Redis (final status) -->
-        <mxCell id="e_p5_redis" value="update job&#xa;{status: completed}" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#666;" edge="1" source="p5" target="redis_store" parent="1">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
-
-        <!-- P6 → outputs store -->
-        <mxCell id="e_p6_out" value="write *.md" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#666;" edge="1" source="p6" target="outputs_store" parent="1">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
-
-        <!-- Admin reads Redis (GET /results, GET /jobs) -->
-        <mxCell id="e_redis_admin" value="GET /results/{id}&#xa;GET /jobs" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#6c8ebf;dashed=1;" edge="1" source="redis_store" target="admin" parent="1">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
-
-        <!-- Admin reads outputs (download reports) -->
-        <mxCell id="e_out_admin" value="download report (.md)" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#6c8ebf;dashed=1;" edge="1" source="outputs_store" target="admin" parent="1">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
-
-      </root>
-    </mxGraphModel>
-  </diagram>
-</mxfile>
+    <!-- Level 1 Flows -->
+    <mxCell id="lf1" value="Job Request" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;" edge="1" source="l1_ee1" target="p1" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="lf2" value="Job Queued" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;" edge="1" source="p1" target="ds1" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="lf3" value="Log Paths / Scan Params" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;" edge="1" source="p1" target="p2" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="lf4" value="Raw Logs" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;" edge="1" source="l1_ee2" target="p2" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="lf5" value="Detection Report" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;" edge="1" source="p2" target="p3" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="lf5b" value="Detection Report" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;" edge="1" source="p2" target="p4" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="lf6" value="CVE Query" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;" edge="1" source="p4" target="l1_ee3" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="lf7" value="CVE Results" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;" edge="1" source="l1_ee3" target="p4" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1480" y="660" /><mxPoint x="960" y="660" /></Array></mxGeometry></mxCell>
+    <mxCell id="lf8" value="Search Query" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;" edge="1" source="p3" target="l1_ee4" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="lf9" value="Threat Intel" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;" edge="1" source="l1_ee4" target="p3" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1480" y="730" /><mxPoint x="960" y="620" /></Array></mxGeometry></mxCell>
+    <mxCell id="lf10" value="Threat + CVE Data" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;" edge="1" source="p3" target="p5" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="lf10b" value="Threat + CVE Data" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;" edge="1" source="p4" target="p5" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="lf11" value="Mitigation Plan" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;" edge="1" source="p5" target="p6" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="lf12" value="Full Report" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;" edge="1" source="p6" target="ds2" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="lf13" value="Report Data" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;" edge="1" source="p6" target="p7" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="lf14" value="Risk Matrix" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;" edge="1" source="p7" target="ds2" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="lf15" value="Severity + Summary" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;" edge="1" source="p6" target="p9" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="lf16" value="Alert Payload" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;" edge="1" source="p9" target="l1_ee6" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="lf17" value="Severity + IPs" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;" edge="1" source="p6" target="p8" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="lf18" value="Block IP Command" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;" edge="1" source="p8" target="l1_ee5" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="lf19" value="Job Status Update" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;" edge="1" source="p6" target="ds1" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="lf20" value="Status / Report" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;" edge="1" source="ds1" target="l1_ee1" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="200" y="815" /><mxPoint x="85" y="815" /><mxPoint x="85" y="570" /></Array></mxGeometry></mxCell>
+  </root>
+</mxGraphModel>

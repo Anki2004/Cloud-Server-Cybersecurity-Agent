@@ -89,12 +89,6 @@ def unblock_ip(ec2_client, sg_id: str, ip: str) -> bool:
 
 
 def run_soar(job_id: str, report: str, severity: str) -> dict:
-    """
-    Main SOAR entry point.
-    Extracts attacking IPs from report and blocks them in AWS SG.
-    Only runs when severity is CRITICAL.
-    Returns dict with blocked_ips, skipped_ips, errors.
-    """
     result = {
         "soar_triggered": False,
         "blocked_ips":    [],
