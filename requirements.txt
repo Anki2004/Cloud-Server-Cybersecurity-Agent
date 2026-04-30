@@ -11,3 +11,4 @@ tenacity
 redis==5.0.3
 psycopg-binary==3.3.3
 apscheduler==3.10.4
+litellm
