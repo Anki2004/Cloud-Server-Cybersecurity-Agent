@@ -19,7 +19,7 @@ threat_analyst = Agent(
     verbose=True,
     allow_delegation=False,
     llm=llm,
-    tools=[CybersecurityThreatsTool()],
+    tools=[cybersecurity_threats_tool],
     max_iter=5,
     # memory=True,
 )

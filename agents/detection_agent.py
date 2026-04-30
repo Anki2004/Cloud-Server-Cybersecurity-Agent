@@ -32,9 +32,9 @@ detection_agent = Agent(
         "more serious than either finding alone. You never skip a tool."
     ),
     tools=[
-        LogAnalysisTool(),
-        NetworkMonitorTool(),
-        FileSystemMonitorTool(),
+        log_analysis_tool,
+        network_monitor_tool,
+        filesystem_monitor_tool,
     ],
     verbose=True,
     allow_delegation=False,
